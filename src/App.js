@@ -1,28 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import SignIn from "./containers/login";
+import SignUp from "./containers/signUp";
+import { useState } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <h1>
-          what what what
-        </h1>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [signUp, setsignUp] = useState(false);
+
+  return <div className="App"> {signUp ? <SignUp onSignInClicked={() => {setsignUp(false)}} /> : <SignIn onSignUpClicked={ () => {setsignUp(true)}} />}</div>;
+  
 }
 
 export default App;

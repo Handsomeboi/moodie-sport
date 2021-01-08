@@ -4,6 +4,7 @@ import SignUp from "./containers/signUp";
 import { useState, useEffect } from "react";
 import firebase from 'firebase';
 
+
 function onAuthStateChange(callback) {
   return firebase.auth().onAuthStateChanged(user => {
     if (user) {

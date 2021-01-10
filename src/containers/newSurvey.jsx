@@ -37,9 +37,10 @@ const NewSurvey = () => {
   const user = firebase.auth().currentUser;
   console.log(user);
 
-  const users = firebase.firestore().collection("users").doc(user.uid);
+  const users = firebase.firestore().collection("users").doc(user.uid).collection("startedSurveys");
 
   users.get().then((snap) => {
+      
     console.log(snap.data());
   });
 

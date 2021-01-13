@@ -7,31 +7,60 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
 const SurveyQuestion = (props) => {
-  const [selectedValue, setSelectedValue] = React.useState("a");
-
+  const [selectedValue, setSelectedValue] = React.useState(
+    props.question.answer ?? 1
+  );
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
+    if (props.question) {
+      props.onAnswerGiven(props.question.id, {
+        ...props.question,
+        answer: event.target.value,
+      });
+    }
   };
 
   return (
-    <div key={props.question.id}>
+    <div>
       <FormControl component="fieldset">
         <FormLabel component="legend">{props.question.question}</FormLabel>
         <RadioGroup
           row
           aria-label="position"
           name="position"
-          defaultValue="top"
+          value={selectedValue}
+          onChange={handleChange}
         >
-          {arrayWithIncrementalValues(1, 5).map((num, index) => (
-            <FormControlLabel
-              key={num}
-              value={num}
-              control={<Radio color="primary" />}
-              label={num}
-              labelPlacement="top"
-            />
-          ))}
+          <FormControlLabel
+            value="1"
+            control={<Radio color="primary" />}
+            label="1"
+            labelPlacement="top"
+          />
+          <FormControlLabel
+            value="2"
+            control={<Radio color="primary" />}
+            label="2"
+            labelPlacement="top"
+          />
+          <FormControlLabel
+            value="3"
+            control={<Radio color="primary" />}
+            label="3"
+            labelPlacement="top"
+          />
+          <FormControlLabel
+            value="4"
+            control={<Radio color="primary" />}
+            label="4"
+            labelPlacement="top"
+          />
+          <FormControlLabel
+            value="5"
+            control={<Radio color="primary" />}
+            label="5"
+            labelPlacement="top"
+          />
         </RadioGroup>
       </FormControl>
     </div>

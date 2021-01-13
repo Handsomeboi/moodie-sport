@@ -52,7 +52,10 @@ export default function SignUp(props) {
 
   const signUpHandler = async () => {
     const auth = firebase.auth();
-    await auth.createUserWithEmailAndPassword(email, password);
+    const cred = await auth.createUserWithEmailAndPassword(email, password);
+    firebase.firestore().collection("users").doc(cred.user.uid).set({
+      email: cred.user.email,
+    });
   };
 
   return (

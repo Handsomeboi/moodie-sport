@@ -47,11 +47,11 @@ function App() {
     };
   }, []);
 
-  // Render when user is logged in
+  // Rendere hvis brugeren er logget ind
   if (user) {
     return <Dashboard />;
   } else {
-  // Render when user is not logged in
+  // Rendere hvis brugeren ikke er logget ind
     return (
       <div className="App">
         {signUp ? (

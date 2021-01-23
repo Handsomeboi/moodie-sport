@@ -134,9 +134,6 @@ export default function SignUp(props) {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

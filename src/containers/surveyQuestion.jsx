@@ -31,7 +31,15 @@ const SurveyQuestion = (props) => {
           value={selectedValue}
           onChange={handleChange}
         >
+        {/* [1, 2, 3, 4, 5] */}
+        {arrayWithIncrementalValues(1, 5).map((value) => 
           <FormControlLabel
+            value={value.toString()}
+            control={<Radio color="primary" />}
+            label={value}
+            labelPlacement="top"
+          />)}
+          {/* <FormControlLabel
             value="1"
             control={<Radio color="primary" />}
             label="1"
@@ -61,6 +69,12 @@ const SurveyQuestion = (props) => {
             label="5"
             labelPlacement="top"
           />
+          <FormControlLabel
+            value="5"
+            control={<Radio color="primary" />}
+            label="5"
+            labelPlacement="top"
+          /> */}
         </RadioGroup>
       </FormControl>
     </div>

@@ -5,6 +5,11 @@ import Dashboard from "./containers/dashboard";
 import { useState, useEffect } from "react";
 import firebase from "firebase";
 
+/**
+ * Et hook der lytter på ændringer i authState/firebase og kalder callback,
+ * med opdateret user eller null
+ * @param {Callback er en function, der tager en user eller null} callback 
+ */
 function onAuthStateChange(callback) {
   return firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -14,7 +19,10 @@ function onAuthStateChange(callback) {
     }
   });
 }
-
+/**
+ * App root, holder styr på at vise de forskellige pages/components,
+ * alt efter authState
+ */
 function App() {
   const [signUp, setsignUp] = useState(false);
   const [user, setUser] = useState(firebase.auth().currentUser);

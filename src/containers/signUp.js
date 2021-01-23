@@ -12,25 +12,16 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import firebase from "firebase";
 import React, { useState } from "react";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
+/**
+ * Material Design, giver et function, som laver en hook
+ som giver intellicense til css properties */ 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "center"
   },
   avatar: {
     margin: theme.spacing(1),

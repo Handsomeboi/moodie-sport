@@ -24,9 +24,22 @@ function onAuthStateChange(callback) {
  * alt efter authState
  */
 function App() {
+  /**
+   * Flag der kontrollere om brugere ser Sign in komponenter
+   * eller sign up komponenter
+   * Ref: Linje 49 - 58
+   */
   const [signUp, setsignUp] = useState(false);
+  /**
+   * Når appen starter, så tjekker vi firebase.auth currentuser
+   * og ser om brugeren har været logget ind før eller ej
+   * og sætter derefter som default
+   */
   const [user, setUser] = useState(firebase.auth().currentUser);
-
+/**
+ * Vores useEffect kører kun når appen rendere
+ * ved teardown, fjernes fra dommen, vil den køre unsubscribe
+ */
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
     return () => {

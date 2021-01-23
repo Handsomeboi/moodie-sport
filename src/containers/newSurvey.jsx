@@ -8,45 +8,53 @@ import firebase from "firebase";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 
 import { useAuthState } from "react-firebase-hooks/auth";
-
+/**
+ * Hard coded data
+ * Fremtidig udvikling, skal der laves en firebase collection
+ * som indeholder vores surveys
+ */
 const data = [
   {
     id: 1,
-    question: "I have felt cheerful and in good spirit",
     answer: "",
+    question: "I have felt cheerful and in good spirit",
   },
   {
     id: 2,
-    question: "I felt calm and relaxed",
     answer: "",
+    question: "I felt calm and relaxed",
   },
   {
     id: 3,
-
     answer: "",
     question: "I have felt active and vigorous",
   },
   {
     id: 4,
     answer: "",
-
     question: "I woke up feeling fresh and rested",
   },
   {
     id: 5,
-    question: "My daily life has been filled things that interest me",
     answer: "",
+    question: "My daily life has been filled things that interest me",
   },
 ];
 
 const survey = {
-  id: "donger12",
+  id: "6a1ef68e4af65a1f68",
   data,
 };
-
+/**
+ * Custom hook
+ * Vi finder brugeren
+ */
 const useStartedSurveyByUser = () => {
   const [user] = useAuthState(firebase.auth());
-
+/**
+ * Ud fra brugeren, så tjekker vi om user id
+ * har vores "startedSurvey"
+ */
   const [startedSurveysForUser] = useCollection(
     firebase
       .firestore()
@@ -54,16 +62,24 @@ const useStartedSurveyByUser = () => {
       .doc(user.uid)
       .collection("startedSurveys")
   );
-
+/**
+ * Hvis brugeren ikke har "startedSurvey" eller startedSurveys Collection er tom,
+ * så tilføjer vi et "startedSurvey" dokument til brugeren
+ */
   if (!startedSurveysForUser) {
     const ref = firebase.firestore().collection("users").doc(user.uid);
 
     ref.collection("startedSurveys").doc(survey.id).set(survey);
   }
 
+  /**
+   * Hvis collectionen "startedSurvey" findes og vi ikke finder et dokument
+   * med samme ID som den ID vi prøver at starte
+   * så tilføjer vi en surveyen
+   */
   if (
     startedSurveysForUser &&
-    !!startedSurveysForUser.docs.find((doc) => doc.uid === survey.id)
+    !!startedSurveysForUser.docs.find((doc) => doc.uid !== survey.id)
   ) {
     firebase
       .firestore()
@@ -73,7 +89,12 @@ const useStartedSurveyByUser = () => {
       .doc(survey.id)
       .set(survey);
   }
-
+/**
+ * Vi henter surveyen ud til brugeren
+ * inden rendering, så loader vi for brugeren
+ * 
+ * ellers return error
+ */
   const [userSurveyQuestion, loading, error] = useDocument(
     firebase
       .firestore()
@@ -86,26 +107,39 @@ const useStartedSurveyByUser = () => {
 
   return [doc, loading, error];
 };
-
+/**
+ * her brugere vi vores custom hook
+ * til at hente survey doc ref
+ * samt loading og error states
+ */
 const NewSurvey = () => {
   const [userSurveyRef, loading, error] = useStartedSurveyByUser();
 
   if (error) {
-    return <div>error me mummy</div>;
+    return <div>Error, couldnt find survey</div>;
   }
 
   if (loading) {
     return "loading....";
   }
-
+/**
+ * 
+ * @param {Hvilket spørgsmål vi prøver at svare på} id 
+ * @param {Svaret på spørgsmålet, som skal gemmes} answer 
+ * 
+ * Vores handle function tilføjer et svar
+ * til vores survey collection doc
+ */
   const handle = async (id, answer) => {
-    console.log(id, answer);
+/**
+ * Her gemmer vi brugeren svar så hvis de forlader surveyen
+ * så bliver deres svar gemt og kan blive opdateret
+ */
+    const data = userSurveyRef.data(); // konkret data for survey
+    const filtered = data.data.filter((d) => d.id !== id); // filtrere det gamle svar væk
 
-    const data = userSurveyRef.data();
-    const filtered = data.data.filter((d) => d.id !== id);
 
-    console.log(userSurveyRef);
-
+    // tilføjer det nye svar
     await userSurveyRef.ref.set({
       ...data,
       data: [...filtered, answer],

@@ -14,19 +14,11 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import firebase from "firebase";
 import React, { useState } from "react";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
+/**
+ * Custom hook fra material UI
+ * som gør det muligt at give vores komponenter de classes
+ * vi har defineret i makeStyles
+ */
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -124,9 +116,6 @@ export default function SignIn(props) {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

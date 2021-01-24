@@ -17,27 +17,27 @@ const data = [
   {
     id: 1,
     answer: "",
-    question: "I have felt cheerful and in good spirit",
+    question: "I de sidste 2 uger har jeg været glad og i godt humør",
   },
   {
     id: 2,
     answer: "",
-    question: "I felt calm and relaxed",
+    question: "I de sidste 2 uger har jeg følt mig rolig og afslappet",
   },
   {
     id: 3,
     answer: "",
-    question: "I have felt active and vigorous",
+    question: "I de sidste 2 uger har jeg følt mig aktiv og energisk",
   },
   {
     id: 4,
     answer: "",
-    question: "I woke up feeling fresh and rested",
+    question: "I de sidste 2 uger er jeg vågnet frisk og udhvilet",
   },
   {
     id: 5,
     answer: "",
-    question: "My daily life has been filled things that interest me",
+    question: "I de sidste 2 uger har min daglidag været fyædt med ting der interessere mig",
   },
 ];
 
@@ -51,10 +51,10 @@ const survey = {
  */
 const useStartedSurveyByUser = () => {
   const [user] = useAuthState(firebase.auth());
-/**
- * Ud fra brugeren, så tjekker vi om user id
- * har vores "startedSurvey"
- */
+  /**
+   * Ud fra brugeren, så tjekker vi om user id
+   * har vores "startedSurvey"
+   */
   const [startedSurveysForUser] = useCollection(
     firebase
       .firestore()
@@ -62,10 +62,10 @@ const useStartedSurveyByUser = () => {
       .doc(user.uid)
       .collection("startedSurveys")
   );
-/**
- * Hvis brugeren ikke har "startedSurvey" eller startedSurveys Collection er tom,
- * så tilføjer vi et "startedSurvey" dokument til brugeren
- */
+  /**
+   * Hvis brugeren ikke har "startedSurvey" eller startedSurveys Collection er tom,
+   * så tilføjer vi et "startedSurvey" dokument til brugeren
+   */
   if (!startedSurveysForUser) {
     const ref = firebase.firestore().collection("users").doc(user.uid);
 
@@ -79,7 +79,7 @@ const useStartedSurveyByUser = () => {
    */
   if (
     startedSurveysForUser &&
-    !!startedSurveysForUser.docs.find((doc) => doc.uid !== survey.id)
+    !!startedSurveysForUser.docs.find((doc) => doc.uid === survey.id)
   ) {
     firebase
       .firestore()
@@ -89,12 +89,12 @@ const useStartedSurveyByUser = () => {
       .doc(survey.id)
       .set(survey);
   }
-/**
- * Vi henter surveyen ud til brugeren
- * inden rendering, så loader vi for brugeren
- * 
- * ellers return error
- */
+  /**
+   * Vi henter surveyen ud til brugeren
+   * inden rendering, så loader vi for brugeren
+   * 
+   * ellers return error
+   */
   const [userSurveyQuestion, loading, error] = useDocument(
     firebase
       .firestore()
@@ -122,19 +122,19 @@ const NewSurvey = () => {
   if (loading) {
     return "loading....";
   }
-/**
- * 
- * @param {Hvilket spørgsmål vi prøver at svare på} id 
- * @param {Svaret på spørgsmålet, som skal gemmes} answer 
- * 
- * Vores handle function tilføjer et svar
- * til vores survey collection doc
- */
+  /**
+   * 
+   * @param {Hvilket spørgsmål vi prøver at svare på} id 
+   * @param {Svaret på spørgsmålet, som skal gemmes} answer 
+   * 
+   * Vores handle function tilføjer et svar
+   * til vores survey collection doc
+   */
   const handle = async (id, answer) => {
-/**
- * Her gemmer vi brugeren svar så hvis de forlader surveyen
- * så bliver deres svar gemt og kan blive opdateret
- */
+    /**
+     * Her gemmer vi brugeren svar så hvis de forlader surveyen
+     * så bliver deres svar gemt og kan blive opdateret
+     */
     const data = userSurveyRef.data(); // konkret data for survey
     const filtered = data.data.filter((d) => d.id !== id); // filtrere det gamle svar væk
 

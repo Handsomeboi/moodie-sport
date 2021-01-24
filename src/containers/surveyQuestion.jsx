@@ -31,50 +31,50 @@ const SurveyQuestion = (props) => {
           value={selectedValue}
           onChange={handleChange}
         >
-        {/* [1, 2, 3, 4, 5] */}
-        {arrayWithIncrementalValues(1, 5).map((value) => 
+          {/* [1, 2, 3, 4, 5] */}
+          {/*arrayWithIncrementalValues(1, 5).map((value) =>
+            <FormControlLabel
+              value={value.toString()}
+              control={<Radio color="primary" />}
+              label={value}
+              labelPlacement="top"
+          />)*/}
           <FormControlLabel
-            value={value.toString()}
+            value="På intet tidspunkt"
             control={<Radio color="primary" />}
-            label={value}
-            labelPlacement="top"
-          />)}
-          {/* <FormControlLabel
-            value="1"
-            control={<Radio color="primary" />}
-            label="1"
+            label="På intet tidspunkt"
             labelPlacement="top"
           />
           <FormControlLabel
-            value="2"
+            value="Lidt af tiden"
             control={<Radio color="primary" />}
-            label="2"
+            label="Lidt af tiden"
             labelPlacement="top"
           />
           <FormControlLabel
-            value="3"
+            value="Lidt mindre end halvdelen af tiden"
             control={<Radio color="primary" />}
-            label="3"
+            label="Lidt mindre end halvdelen af tiden"
             labelPlacement="top"
           />
           <FormControlLabel
-            value="4"
+            value="Lidt mere end halvdelen af tiden"
             control={<Radio color="primary" />}
-            label="4"
+            label="Lidt mere end halvdelen af tiden"
             labelPlacement="top"
           />
           <FormControlLabel
-            value="5"
+            value="Det meste af tiden"
             control={<Radio color="primary" />}
-            label="5"
+            label="Det meste af tiden"
             labelPlacement="top"
           />
           <FormControlLabel
-            value="5"
+            value="Hele tiden"
             control={<Radio color="primary" />}
-            label="5"
+            label="Hele tiden"
             labelPlacement="top"
-          /> */}
+          />
         </RadioGroup>
       </FormControl>
     </div>
